@@ -23,30 +23,34 @@ const client = new tmi.Client({
 const onMessage = async (channel, tags, message, self) => {
     let author = tags['display-name'];
     
-    if (author.toLowerCase() != config.target_user.toLowerCase())
+    let getUser = config.target_users
+        .filter(i => i.user.toLowerCase() == author.toLowerCase());
+
+    if (getUser.length != 1)
         return;
+
+    getUser = getUser[0];
     
     console.log(`${author} -> ${message}`);
     
     let data = JSON.parse(fs.readFileSync("./data.json"));
 
-    fs.writeFileSync("./data.json", JSON.stringify({ ...data, lastSent: new Date() }));
+    fs.writeFileSync("./data.json", JSON.stringify({ ...data, [`lastSent_${getUser.user}`]: new Date() }));
 
     console.log(`<${author}> ${message}`);
-    message = `${author}: ${message}`;
+    message = `${getUser.user_badge || ""} ${author}: ${message}`;
 
-    if ((new Date() - new Date(data.lastSent)) > config.notify_after) {
-        message = config.notice_message + "\n" + message;
+    if (getUser.notice && (new Date() - new Date(data[`lastSent_${getUser.user}`])) > config.notify_after) {
+        message = notice.notice_message + "\n" + message;
     }
 
     notifyServer(message);
 }
 
 const notifyServer = async (message) => {
-
     return Axios({
         method: "POST",
-        url: config.wehook_url,
+        url: config.webhook_url,
         headers: {
             "Content-Type": "application/json"
         },
@@ -59,4 +63,4 @@ const notifyServer = async (message) => {
 client.connect();
 client.on('message', onMessage);
 
-console.log(`Bot started! Targeting for ${config.target_user}`);
+console.log(`Bot started! Targeting for ${config.target_users.length} users`);

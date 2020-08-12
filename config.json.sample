@@ -3,8 +3,19 @@
     "password": "",
 
     "target_channel": "",
-    "target_user": "",
     "notify_after": 1800000,
-    "notice_message": "@here User is in chat!",
-    "webhook_url": "https://discordapp.com/api/webhooks/##/####"
+    "target_users": [
+        {
+			"user": "peepoMan",
+			"user_badge": "👑",
+			"notice": true,
+			"notice_message": "@here Peepo Man is here!"
+		},
+		{
+			"user": "vibeolame",
+			"user_badge": "🛡️",
+			"notice": false
+		}
+	],
+	"webhook_url": "https://discordapp.com/api/webhooks/###/######"
 }
