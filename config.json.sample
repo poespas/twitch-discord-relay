@@ -5,5 +5,6 @@
     "target_channel": "",
     "target_user": "",
     "notify_after": 1800000,
-    "notice_message": "@here User is in chat!"
+    "notice_message": "@here User is in chat!",
+    "webhook_url": "https://discordapp.com/api/webhooks/##/####"
 }

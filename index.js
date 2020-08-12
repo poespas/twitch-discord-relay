@@ -46,7 +46,7 @@ const notifyServer = async (message) => {
 
     return Axios({
         method: "POST",
-        url: "https://discordapp.com/api/webhooks/729358959923953666/KLz1CfYMPtznSakk7OABWP0EuqKma7yQtf7ahd5CuFzuALLQ66hzlNVK4qdSdQaKHRBq",
+        url: config.wehook_url,
         headers: {
             "Content-Type": "application/json"
         },
