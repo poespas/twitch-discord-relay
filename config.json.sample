@@ -4,7 +4,6 @@
 
     "target_channel": "",
     "notify_after": 1800000,
-
     "target_users": [
         {
 			"user": "peepoMan",
