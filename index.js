@@ -22,7 +22,6 @@ const client = new tmi.Client({
 
 const onMessage = async (channel, tags, message, self) => {
     let author = tags['display-name'];
-
     
     if (author.toLowerCase() != config.target_user.toLowerCase())
         return;
@@ -33,12 +32,10 @@ const onMessage = async (channel, tags, message, self) => {
 
     fs.writeFileSync("./data.json", JSON.stringify({ ...data, lastSent: new Date() }));
 
-    // console.log({lastSent: new Date(data.lastSent), now: new Date(), diff:  new Date() - new Date(data.lastSent)})
     console.log(`<${author}> ${message}`);
     message = `${author}: ${message}`;
 
     if ((new Date() - new Date(data.lastSent)) > config.notify_after) {
-        // everyone
         message = config.notice_message + "\n" + message;
     }
 
@@ -46,9 +43,6 @@ const onMessage = async (channel, tags, message, self) => {
 }
 
 const notifyServer = async (message) => {
-    console.log({message});
-    
-    return;
 
     return Axios({
         method: "POST",
