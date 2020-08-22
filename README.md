@@ -12,6 +12,14 @@ without needing to open the Twitch channel.
 - Notify the server when a user sends a message after a while
 - Add a user badge to a specific user so you can quickly identify a user
 
+## How to use
+
+- Install [Node](http://node.js.org/)
+- Fill in config.json (See section Config)
+- Run the code by running:
+        
+		node .
+
 ## Config
 
 ```js
