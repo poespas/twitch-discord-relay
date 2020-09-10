@@ -22,7 +22,7 @@ const client = new tmi.Client({
 
 const onMessage = async (channel, tags, message, self) => {
     let author = tags['display-name'];
-    
+
     let getUser = config.target_users
         .filter(i => i.user.toLowerCase() == author.toLowerCase());
 
@@ -30,9 +30,9 @@ const onMessage = async (channel, tags, message, self) => {
         return;
 
     getUser = getUser[0];
-    
+
     console.log(`${author} -> ${message}`);
-    
+
     let data = JSON.parse(fs.readFileSync("./data.json"));
 
     fs.writeFileSync("./data.json", JSON.stringify({ ...data, [`lastSent_${getUser.user}`]: new Date() }));
@@ -41,13 +41,14 @@ const onMessage = async (channel, tags, message, self) => {
     message = `${getUser.user_badge || ""} ${author}: ${message}`;
 
     if (getUser.notice && (new Date() - new Date(data[`lastSent_${getUser.user}`])) > config.notify_after) {
-        message = notice.notice_message + "\n" + message;
+        message = getUser.notice_message + "\n" + message;
     }
 
     notifyServer(message);
 }
 
 const notifyServer = async (message) => {
+    console.log({message});
     return Axios({
         method: "POST",
         url: config.webhook_url,
