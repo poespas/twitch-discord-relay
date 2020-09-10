@@ -48,7 +48,6 @@ const onMessage = async (channel, tags, message, self) => {
 }
 
 const notifyServer = async (message) => {
-    console.log({message});
     return Axios({
         method: "POST",
         url: config.webhook_url,
